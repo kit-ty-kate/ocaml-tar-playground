@@ -10,9 +10,7 @@ module Tar_gz = Tar_gz.Make
           let really_read ic buf =
             let len = Bytes.length buf in
             really_input ic buf 0 len
-          let skip ic len =
-            let buf = Bytes.create len in
-            really_input ic buf 0 len
+          let skip = Stdlib.seek_in
           let read ic buf =
             let max = Bytes.length buf in
             input ic buf 0 max end)
