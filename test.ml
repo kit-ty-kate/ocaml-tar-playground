@@ -4,16 +4,10 @@ module Tar_gz = Tar_gz.Make
           let return x = x end)
   (struct type out_channel = Stdlib.out_channel
           type 'a io = 'a
-          let really_write oc str = output_string oc str end)
+          let really_write = Stdlib.output_string end)
   (struct type in_channel = Stdlib.in_channel
           type 'a io = 'a
-          let really_read ic buf =
-            let len = Bytes.length buf in
-            really_input ic buf 0 len
-          let skip = Stdlib.seek_in
-          let read ic buf =
-            let max = Bytes.length buf in
-            input ic buf 0 max end)
+          let read ic buf = Stdlib.input ic buf 0 (Bytes.length buf) end)
 
 let print ic hdr =
   let buf = Bytes.create (Int64.to_int hdr.Tar.Header.file_size) in
